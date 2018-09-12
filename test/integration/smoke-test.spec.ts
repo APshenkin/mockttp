@@ -24,6 +24,14 @@ describe("Basic HTTP mocking", function () {
         expect(await response.text()).to.equal("mocked data");
     });
 
+    it("should mock simple matching request with part of url", async () => {
+        await server.get("/v3/address", { matchByPartOfPath: true }).thenReply(200, "mocked data");
+
+        let response = await fetch(server.urlFor("/v3/address/private/validate/"));
+
+        expect(await response.text()).to.equal("mocked data");
+    });
+
     nodeOnly(() => {
         it("should mock request via callback", async () => {
             await server.get("/callback-endpoint").thenCallback(() => {

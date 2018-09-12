@@ -48,7 +48,7 @@ nodeOnly(() => {
                     resolveWithFullResponse: true
                 });
 
-                expect(response.headers['content-type']).to.equal('text/html');
+                expect(response.headers['content-type']).to.equal('text/html; charset=UTF-8');
             });
         });
 
@@ -72,7 +72,7 @@ nodeOnly(() => {
                     let response = await request.get("http://example.com/endpoint");
                     expect(response).to.equal("mocked data");
                 });
-                
+
                 it("should mock proxied HTTPS", async () => {
                     await server.get("https://example.com/endpoint").thenReply(200, "mocked data");
 
@@ -86,10 +86,10 @@ nodeOnly(() => {
                     let response = await request.get("https://example.com:1234/endpoint");
                     expect(response).to.equal("mocked data");
                 });
-                
+
                 it("should be able to pass through requests with a body", async () => {
                     await server.post("https://httpbin.org/post").thenPassThrough();
-                    
+
                     let response = await request.post({
                         url: "https://httpbin.org/post",
                         json: { "test": true }
@@ -105,10 +105,10 @@ nodeOnly(() => {
 
                     expect(response.args.a).to.equal('b');
                 });
-                
+
                 it("should be able to verify requests passed through with a body", async () => {
                     const endpointMock = await server.post("https://httpbin.org/post").thenPassThrough();
-                    
+
                     let response = await request.post({
                         url: "https://httpbin.org/post",
                         json: { "test": true }

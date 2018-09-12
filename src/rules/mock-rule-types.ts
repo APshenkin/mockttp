@@ -18,7 +18,8 @@ export interface MockRule extends Explainable {
 }
 
 export interface MockRuleCtx {
-    matchByPath?: boolean
+    matchByPath?: boolean;
+    matchByPartOfPath?: boolean;
 }
 
 export interface MockRuleData {

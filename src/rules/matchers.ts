@@ -96,6 +96,9 @@ const matcherBuilders: { [T in MatcherType]: MatcherBuilder<MatcherDataLookup[T]
             if (data.ctx && data.ctx.matchByPath === true) {
                 matchUrl = normalizeUrl(request.path)
             }
+            if (data.ctx && data.ctx.matchByPartOfPath === true) {
+                return request.method === methodName && matchUrl.indexOf(url) > -1;
+            }
             return request.method === methodName && matchUrl === url
         }, { explain: () => `making ${methodName}s for ${data.path}` });
     },
